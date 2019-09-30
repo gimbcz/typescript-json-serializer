@@ -171,7 +171,7 @@ function convertPropertyToData(instance: Function, key: string, value: Metadata,
  * Function to convert json data to the class property
  */
 function convertDataToProperty(instance: Function, key: string, value: Metadata, data: any): any {
-
+    if(data == null) return ; // null value
     const type: Metadata = Reflect.getMetadata(designType, instance, key);
     const isArray: boolean = type.name.toLowerCase() === Type.Array;
     const predicate: Function = value['predicate'];
@@ -223,6 +223,10 @@ function getJsonPropertyValue(key: string, args: string | { name?: string, type:
  * Function to cast simple type data into the real class property type
  */
 function castSimpleData(type: string, data: any): any {
+    // for null data value
+    if(data == null){
+        return data;
+    }
     type = type.toLowerCase();
 
     if ((typeof data).toLowerCase() === type) {
